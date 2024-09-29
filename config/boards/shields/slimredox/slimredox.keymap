@@ -1,0 +1,202 @@
+/*
+ * Copyright (c) 2021 The ZMK Contributors
+ *
+ * SPDX-License-Identifier: MIT
+ */
+
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/ext_power.h>
+#include <dt-bindings/zmk/outputs.h>
+#include <syspass.h>
+
+#define xxx &none
+#define ___ &trans
+#define ph1 &kp LC(LS(N1))
+#define ph2 &kp LC(LS(N2))
+#define ph3 &kp LC(LS(N3))
+#define ph4 &kp LC(LS(N4))
+#define ph5 &kp LC(LS(N5))
+#define ph6 &kp LC(LS(N6))
+#define ph7 &kp LC(LS(N7))
+#define ph8 &kp LC(LS(N8))
+#define ph9 &kp LC(LS(N9))
+#define nvtc &kp LC(BSLH)
+#define mv &macro_wait_time 70
+
+#define DEFAULT 0
+#define WIN 1
+#define LOWER 2
+#define RAISE 3
+#define NUM 4
+
+
+/ {
+    macros {
+        tmux0: tmux0{
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LC(B)>, <&kp N0>;
+        };
+        tmux1: tmux1{
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LC(B)>, <&kp N1>;
+        };
+        tmux2: tmux2{
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LC(B)>, <&kp N2>;
+        };
+        tmux3: tmux3{
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&kp LC(B)>, <&kp N3>;
+        };
+        defbt1: defbt1{
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&to DEFAULT>, <&bt BT_SEL 1>;
+        };
+        winbt2: winbt2{
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&to WIN>, <&bt BT_SEL 2>;
+        };
+        winpass: winpass{
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = WINPASS;
+        };
+        syspass: syspass{
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = SYSPASS;
+        };
+        bitpass: bitpass{
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&macro_wait_time 50>, BITPASS;
+        };
+    };
+};
+
+
+
+/ {
+  behaviors {
+        bhm: balanced_homerow_mods {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <300>;    // <---[[moderate duration]]
+            quick-tap-ms = <0>;
+            flavor = "balanced";
+            bindings = <&kp>, <&kp>;
+        };
+        lhm: balanced_homerow_mods2 {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <300>;    // <---[[moderate duration]]
+            quick-tap-ms = <0>;
+            flavor = "hold-preferred";
+            bindings = <&mo>, <&kp>;
+        };
+        btp: bluetooth_clear_protection {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <1000>;    // <---[[moderate duration]]
+            quick-tap-ms = <0>;
+            flavor = "hold-preferred";
+            bindings = <&kp>, <&kp>;
+        };
+  };
+
+  keymap {
+        compatible =  "zmk,keymap" ;
+
+        default_layer {
+            bindings = <
+// ┌──────────┬──────────┬──────────┬──────────┬──────────┬──────────┐                                                  ┌───────────┬───────────┬──────────┬──────────┬──────────┬──────────┐
+       xxx     &kp N1    &kp N2     &kp N3     &kp N4     &kp N5         xxx                                     xxx       &kp N6     &kp N7       &kp N8    &kp N9      &kp N0    xxx
+// ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┐                           ┌───────────┼───────────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+       xxx     &kp Q     &kp W      &kp E      &kp R      &kp T      &defbt1                                 &winbt2       &kp Y      &kp U        &kp I     &kp O       &kp P     xxx
+// ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤                           ├───────────┼───────────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+       xxx   &bhm LSHIFT A &bhm LALT S  &bhm LGUI D &bhm LCTRL F &kp G                                             &kp H   &bhm LCTRL J &bhm LGUI K  &bhm LALT L  &bhm RSHIFT SEMI xxx
+// ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┐     ┌──────────┼───────────┼───────────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+       xxx       &kp Z     &kp X      &kp C      &kp V      &kp B                                                           &kp N      &kp M       &kp COMMA  &kp DOT    &kp FSLH  xxx
+// ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤     ├──────────┼───────────┼───────────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+       xxx   &kp LALT  &kp LCMD   &kp TAB        &lhm LOWER ESC  &lhm LOWER SPACE  xxx             xxx    &lhm NUM SPACE  &lhm RAISE RET  &kp BSPC   &kp DOWN  &kp UP   &kp RET  xxx
+// └──────────┴──────────┴──────────┴──────────┘          └──────────┴──────────┴──────────┘     └──────────┴───────────┴───────────┘           └──────────┴──────────┴──────────┴──────────┘
+            >;
+
+        };
+
+        win_layer {
+            bindings = <
+// ┌──────────┬──────────┬──────────┬──────────┬──────────┬──────────┐                                                  ┌───────────┬───────────┬──────────┬──────────┬──────────┬──────────┐
+       xxx     &kp N1    &kp N2     &kp N3     &kp N4     &kp N5         xxx                                     xxx       &kp N6     &kp N7       &kp N8    &kp N9      &kp N0    xxx
+// ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┐                           ┌───────────┼───────────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+       xxx     &kp Q     &kp W      &kp E      &kp R      &kp T      &defbt1                                 &winbt2       &kp Y      &kp U        &kp I     &kp O       &kp P     xxx
+// ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤                           ├───────────┼───────────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+       xxx   &bhm LSHIFT A &bhm LALT S  &bhm LGUI D &bhm LCTRL F &kp G                                             &kp H   &bhm LCTRL J &bhm LGUI K  &bhm LALT L  &bhm RSHIFT SEMI xxx
+// ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┐     ┌──────────┼───────────┼───────────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+       xxx       &kp Z     &kp X      &kp C      &kp V      &kp B                                                           &kp N      &kp M       &kp COMMA  &kp DOT    &kp FSLH  xxx
+// ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤     ├──────────┼───────────┼───────────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+       xxx   &kp LALT  &kp LCMD   &kp TAB        &lhm LOWER ESC  &lhm LOWER SPACE  xxx             xxx    &lhm NUM SPACE  &lhm RAISE RET  &kp BSPC   &kp DOWN  &kp UP   &kp RET  xxx
+// └──────────┴──────────┴──────────┴──────────┘          └──────────┴──────────┴──────────┘     └──────────┴───────────┴───────────┘           └──────────┴──────────┴──────────┴──────────┘
+            >;
+    };
+
+        lower_layer {
+            bindings = <
+// ┌──────────┬──────────┬──────────┬──────────┬──────────┬──────────┐                                                  ┌───────────┬───────────┬──────────┬──────────┬──────────┬──────────┐
+       xxx     &kp N1    &kp N2     &kp N3     &kp N4     &kp N5         xxx                                     xxx       &kp N6     &kp N7       &kp N8    &kp N9      &kp N0    xxx
+// ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┐                           ┌───────────┼───────────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+       xxx     &kp Q     &kp W      &kp E      &kp R      &kp T      &defbt1                                 &winbt2       &kp Y      &kp U        &kp I     &kp O       &kp P     xxx
+// ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤                           ├───────────┼───────────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+       xxx   &bhm LSHIFT A &bhm LALT S  &bhm LGUI D &bhm LCTRL F &kp G                                             &kp H   &bhm LCTRL J &bhm LGUI K  &bhm LALT L  &bhm RSHIFT SEMI xxx
+// ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┐     ┌──────────┼───────────┼───────────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+       xxx       &kp Z     &kp X      &kp C      &kp V      &kp B                                                           &kp N      &kp M       &kp COMMA  &kp DOT    &kp FSLH  xxx
+// ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤     ├──────────┼───────────┼───────────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+       xxx   &kp LALT  &kp LCMD   &kp TAB        &lhm LOWER ESC  &lhm LOWER SPACE  xxx             xxx    &lhm NUM SPACE  &lhm RAISE RET  &kp BSPC   &kp DOWN  &kp UP   &kp RET  xxx
+// └──────────┴──────────┴──────────┴──────────┘          └──────────┴──────────┴──────────┘     └──────────┴───────────┴───────────┘           └──────────┴──────────┴──────────┴──────────┘
+            >;
+        };
+
+        raise_layer {
+            bindings = <
+// ┌──────────┬──────────┬──────────┬──────────┬──────────┬──────────┐                                                  ┌───────────┬───────────┬──────────┬──────────┬──────────┬──────────┐
+       xxx     &kp N1    &kp N2     &kp N3     &kp N4     &kp N5         xxx                                     xxx       &kp N6     &kp N7       &kp N8    &kp N9      &kp N0    xxx
+// ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┐                           ┌───────────┼───────────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+       xxx     &kp Q     &kp W      &kp E      &kp R      &kp T      &defbt1                                 &winbt2       &kp Y      &kp U        &kp I     &kp O       &kp P     xxx
+// ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤                           ├───────────┼───────────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+       xxx   &bhm LSHIFT A &bhm LALT S  &bhm LGUI D &bhm LCTRL F &kp G                                             &kp H   &bhm LCTRL J &bhm LGUI K  &bhm LALT L  &bhm RSHIFT SEMI xxx
+// ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┐     ┌──────────┼───────────┼───────────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+       xxx       &kp Z     &kp X      &kp C      &kp V      &kp B                                                           &kp N      &kp M       &kp COMMA  &kp DOT    &kp FSLH  xxx
+// ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤     ├──────────┼───────────┼───────────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+       xxx   &kp LALT  &kp LCMD   &kp TAB        &lhm LOWER ESC  &lhm LOWER SPACE  xxx             xxx    &lhm NUM SPACE  &lhm RAISE RET  &kp BSPC   &kp DOWN  &kp UP   &kp RET  xxx
+// └──────────┴──────────┴──────────┴──────────┘          └──────────┴──────────┴──────────┘     └──────────┴───────────┴───────────┘           └──────────┴──────────┴──────────┴──────────┘
+            >;
+        };
+        
+    
+
+        num_layer {
+            bindings = <
+// ┌──────────┬──────────┬──────────┬──────────┬──────────┬──────────┐                                                  ┌───────────┬───────────┬──────────┬──────────┬──────────┬──────────┐
+     &bt BT_CLR  &bt BT_SEL 1 &bt BT_SEL 2  &bt BT_SEL 3        xxx        xxx                                             &kp N6     &kp N7       &kp N8    &kp N9      &kp N0    &kp BSPC
+// ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┐                           ┌───────────┼───────────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+     xxx         xxx       &kp N7     &kp N8      &kp N9      xxx        xxx                                    &kp N4     &kp Y      &kp U        &kp I     &kp O       &kp P     &kp SQT
+// ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤                           ├───────────┼───────────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+     xxx         xxx       &kp N4     &kp N5      &kp N6      xxx                                                          &kp H   &bhm LCTRL J &bhm LGUI K  &bhm LALT L  &bhm RSHIFT SEMI  xxx
+// ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┐     ┌──────────┼───────────┼───────────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+     xxx         xxx       &kp N1     &kp N2      &kp N3      xxx                                                          &kp N      &kp M       &kp COMMA  &kp DOT    &kp FSLH   &kp RET
+// ├──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┼──────────┤     ├──────────┼───────────┼───────────┼───────────┼──────────┼──────────┼──────────┼──────────┤
+     xxx        xxx        xxx         &kp LALT               &kp N0    &kp SPACE  &kp SPACE        &kp SPACE  &kp SPACE     &mo 2                &kp LA(LSHFT) &to DEFAULT  &kp UP   &kp RET
+// └──────────┴──────────┴──────────┴──────────┘          └──────────┴──────────┴──────────┘     └──────────┴───────────┴───────────┘           └──────────┴──────────┴──────────┴──────────┘
+            >;
+    };
+
+  };  // keymap
+};  // root
