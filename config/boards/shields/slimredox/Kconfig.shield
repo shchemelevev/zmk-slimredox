@@ -5,3 +5,7 @@ config SHIELD_SLIMREDOX_LEFT
 
 config SHIELD_SLIMREDOX_RIGHT
     def_bool $(shields_list_contains,slimredox_right)
+# No whitespace after the comma or in the keyboard name!
+#
+config SHIELD_SLIMREDOX_DONGLE
+    def_bool $(shields_list_contains,slimresox_dongle)

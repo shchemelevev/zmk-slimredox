@@ -13,6 +13,7 @@ do
      sleep 1
 done
 echo "Nice!Nano connected. Writing firmware..."
+cp build/zephyr/zmk.uf2 ~/zmk/slimredox_right.uf2
 cp build/zephyr/zmk.uf2 /Volumes/NICENANO/slimredox_right.uf2
 
 rm /Users/e_shchemelev/develop/zmk/app/include/syspass.h

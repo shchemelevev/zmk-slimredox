@@ -6,6 +6,7 @@ url: https://github.com/mattdibi/redox-keyboard
 requires: [pro_micro]
 features:
   - keys
+  - studio
 siblings:
   - slimredox_left
   - slimredox_right
