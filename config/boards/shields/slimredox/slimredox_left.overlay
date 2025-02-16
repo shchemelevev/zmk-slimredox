@@ -5,12 +5,8 @@
  */
 
 #include <dt-bindings/zmk/matrix_transform.h>
-
 #include "slimredox.dtsi"
 
-&slimredox_physical_layout_0 {
-    transform = <&default_transform_0>;
-};
 
 &kscan0 {
     col-gpios
@@ -22,6 +18,5 @@
         , <&pro_micro 19 GPIO_ACTIVE_HIGH>
         , <&pro_micro 20 GPIO_ACTIVE_HIGH>
         ;
-    wakeup-source;
 };
 

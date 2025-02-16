@@ -4,8 +4,7 @@
 cd /Users/e_shchemelev/develop/zmk
 source /Users/e_shchemelev/.virtualenvs/zmk_keyring/bin/activate
 cd /Users/e_shchemelev/develop/zmk/app
-west build -p -b nice_nano_v2 -S studio-rpc-usb-uart -- -DSHIELD=slimredox_dongle -DZMK_CONFIG=/Users/e_shchemelev/develop/zmk-slimredox/config
-# west build -p -b nice_nano_v2 -S zmk-usb-logging  -- -DSHIELD=slimredox_left -DZMK_CONFIG=/Users/e_shchemelev/develop/zmk-slimredox/config
+west build -p -b nice_nano_v2 -S zmk-usb-logging -S studio-rpc-usb-uart -- -DSHIELD=slimredox_dongle -DZMK_CONFIG=/Users/e_shchemelev/develop/zmk-slimredox/config
 
 until [ -d /Volumes/NICENANO ]
 do

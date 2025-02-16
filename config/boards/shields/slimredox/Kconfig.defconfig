@@ -1,36 +1,8 @@
 # Copyright (c) 2021 The ZMK Contributors
 # SPDX-License-Identifier: MIT
-if SHIELD_SLIMREDOX_LEFT
-
-
-config ZMK_SPLIT_ROLE_CENTRAL
-    default y
-
-endif
-
-if SHIELD_SLIMREDOX_LEFT || SHIELD_SLIMREDOX_RIGHT
-
-config ZMK_KEYBOARD_NAME
-    default "SlimRedox"
+if SHIELD_SLIMREDOX_DONGLE
 
 config ZMK_SPLIT_ROLE_CENTRAL
-    default n
-
-config ZMK_SPLIT
-    default y
-
-endif
-
-if SHIELD_MY_KEYBOARD_DONGLE
-
-# Max 16 characters in keyboard name
-config ZMK_KEYBOARD_NAME
-    default "SlimRedox"
-
-config ZMK_SPLIT_ROLE_CENTRAL
-    default y
-
-config ZMK_SPLIT
     default y
 
 # Set this to the number of peripherals your dongle will have.
@@ -47,3 +19,18 @@ config BT_MAX_PAIRED
     default 6
 
 endif
+
+if SHIELD_SLIMREDOX_LEFT || SHIELD_SLIMREDOX_RIGHT || SHIELD_SLIMREDOX_DONGLE
+config ZMK_KEYBOARD_NAME
+    default "SlimRedox"
+
+
+config ZMK_SPLIT
+    default y
+endif
+
+if SHIELD_SLIMREDOX_LEFT || SHIELD_SLIMREDOX_RIGHT || SHIELD_SLIMREDOX_DONGLE
+config ZMK_SPLIT_ROLE_CENTRAL
+    default n
+endif
+

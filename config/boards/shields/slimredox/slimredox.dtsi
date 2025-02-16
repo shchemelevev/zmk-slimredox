@@ -12,7 +12,6 @@
 };
 
 
-
 / {
     chosen {
         zmk,kscan = &kscan0;

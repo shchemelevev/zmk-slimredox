@@ -4,9 +4,10 @@
  * SPDX-License-Identifier: MIT
  */
 
+#include <dt-bindings/zmk/matrix_transform.h>
 #include "slimredox.dtsi"
 
-&default_transform {
+&default_transform_0 {
     col-offset = <7>;
 };
 
